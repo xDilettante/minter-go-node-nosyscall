@@ -1,0 +1,21 @@
+version: "3.4"
+services:
+  minter:
+    image: minterteam/minter:latest
+    #build: .
+    volumes:
+      - minter_data:/minter/.minter
+    ports:
+      - "8843:8843"
+      - "127.0.0.1:3000:3000"
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8843/api/v2/status" ]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  minter_data:
+    external: false
